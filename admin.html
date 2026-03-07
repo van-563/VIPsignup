@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>顧客管理システム</title>
+<title>管理システム</title>
 
 <style>
 
@@ -12,20 +12,44 @@ background:#f4f6fb;
 padding:30px;
 }
 
-h1{
+.login-box{
+max-width:400px;
+margin:100px auto;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
 text-align:center;
-margin-bottom:30px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:1px solid #ddd;
+border-radius:6px;
+}
+
+button{
+margin-top:15px;
+padding:12px;
+width:100%;
+background:#0b3a63;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
 }
 
 table{
 width:100%;
 border-collapse:collapse;
 background:white;
-box-shadow:0 5px 20px rgba(0,0,0,0.1);
+margin-top:30px;
 }
 
 th,td{
-padding:12px;
+padding:10px;
 border-bottom:1px solid #eee;
 text-align:center;
 }
@@ -41,7 +65,25 @@ color:white;
 
 <body>
 
-<h1>顧客登録管理システム</h1>
+<!-- 登录界面 -->
+
+<div class="login-box" id="loginBox">
+
+<h2>管理者ログイン</h2>
+
+<input type="text" id="username" placeholder="ユーザーID">
+
+<input type="password" id="password" placeholder="パスワード">
+
+<button onclick="login()">ログイン</button>
+
+</div>
+
+<!-- 后台界面 -->
+
+<div id="adminPanel" style="display:none">
+
+<h1>顧客登録管理</h1>
 
 <table id="dataTable">
 
@@ -65,9 +107,38 @@ color:white;
 
 </table>
 
+</div>
+
 <script>
 
-const apiURL="你的GoogleScriptAPI";
+// 登录账号密码
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "woainizhongguo1949";
+
+// Google Script API
+const apiURL = "你的GoogleScriptAPI";
+
+function login(){
+
+let user=document.getElementById("username").value;
+let pass=document.getElementById("password").value;
+
+if(user===ADMIN_USER && pass===ADMIN_PASS){
+
+document.getElementById("loginBox").style.display="none";
+document.getElementById("adminPanel").style.display="block";
+
+loadData();
+
+}else{
+
+alert("IDまたはパスワードが違います");
+
+}
+
+}
+
+function loadData(){
 
 fetch(apiURL)
 .then(res=>res.json())
@@ -100,6 +171,8 @@ rows+=`
 document.querySelector("#dataTable tbody").innerHTML=rows;
 
 });
+
+}
 
 </script>
 
