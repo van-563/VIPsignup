@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>顧客管理システム</title>
+
+<style>
+
+body{
+font-family:"Hiragino Kaku Gothic ProN",Arial;
+background:#f4f6fb;
+padding:30px;
+}
+
+h1{
+text-align:center;
+margin-bottom:30px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+th,td{
+padding:12px;
+border-bottom:1px solid #eee;
+text-align:center;
+}
+
+th{
+background:#0b3a63;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>顧客登録管理システム</h1>
+
+<table id="dataTable">
+
+<thead>
+<tr>
+
+<th>顧客ID</th>
+<th>氏名</th>
+<th>年齢</th>
+<th>電話番号</th>
+<th>投資経験</th>
+<th>期待利回り</th>
+<th>年収</th>
+<th>投資予定額</th>
+<th>登録時間</th>
+
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+<script>
+
+const apiURL="你的GoogleScriptAPI";
+
+fetch(apiURL)
+.then(res=>res.json())
+.then(data=>{
+
+let rows="";
+
+data.forEach(d=>{
+
+rows+=`
+
+<tr>
+
+<td>${d.client_id}</td>
+<td>${d.name}</td>
+<td>${d.age}</td>
+<td>${d.phone}</td>
+<td>${d.experience}</td>
+<td>${d.expected_return}</td>
+<td>${d.income}</td>
+<td>${d.fund}</td>
+<td>${d.time}</td>
+
+</tr>
+
+`;
+
+});
+
+document.querySelector("#dataTable tbody").innerHTML=rows;
+
+});
+
+</script>
+
+</body>
+</html>
