@@ -4,42 +4,68 @@
 <meta charset="UTF-8">
 <title>公式投資家登録フォーム</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
+
 body{
-  font-family: "Hiragino Kaku Gothic ProN", Arial, sans-serif;
+  font-family:"Hiragino Kaku Gothic ProN", Arial, sans-serif;
   background:#f5f6fa;
   margin:0;
-  padding:0;
 }
+
 .header{
   background:#0b3a63;
   color:white;
   text-align:center;
-  padding:20px;
-  font-size:24px;
+  padding:18px;
+  font-size:22px;
   font-weight:bold;
 }
+
 .container{
   max-width:600px;
-  margin:40px auto;
+  margin:30px auto;
   background:white;
-  padding:30px;
+  padding:25px;
   border-radius:10px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.1);
+  box-shadow:0 6px 25px rgba(0,0,0,0.1);
 }
+
 label{
   display:block;
-  margin-top:15px;
+  margin-top:16px;
   font-weight:600;
+  font-size:15px;
 }
-input, select{
+
+.required::before{
+  content:"* ";
+  color:red;
+  font-weight:bold;
+}
+
+.required::after{
+  content:" 必須";
+  color:#999;
+  font-size:11px;
+  margin-left:4px;
+}
+
+input,select{
   width:100%;
   padding:12px;
   margin-top:6px;
   border:1px solid #ddd;
   border-radius:6px;
   font-size:16px;
+  box-sizing:border-box;
 }
+
+input:focus,select:focus{
+  border-color:#0b3a63;
+  outline:none;
+}
+
 button{
   width:100%;
   margin-top:25px;
@@ -50,32 +76,60 @@ button{
   border-radius:6px;
   font-size:18px;
   cursor:pointer;
+  transition:0.2s;
 }
+
 button:hover{
   background:#072742;
 }
+
 .footer{
   margin-top:20px;
   font-size:12px;
   color:#888;
   text-align:center;
 }
+
+/* 手机优化 */
+
+@media(max-width:600px){
+
+.container{
+  margin:15px;
+  padding:20px;
+}
+
+.header{
+  font-size:20px;
+}
+
+input,select{
+  font-size:16px;
+}
+
+}
+
 </style>
 </head>
+
 <body>
+
 <div class="header">公式投資家登録フォーム</div>
+
 <div class="container">
+
 <form id="registrationForm">
-<label>氏名</label>
+
+<label class="required">氏名</label>
 <input type="text" name="name" placeholder="氏名を入力してください" required>
 
-<label>年齢</label>
+<label class="required">年齢</label>
 <input type="number" name="age" placeholder="年齢を入力してください" min="18" max="100" required>
 
-<label>電話番号</label>
+<label class="required">電話番号</label>
 <input type="tel" name="phone" placeholder="電話番号を入力してください" required>
 
-<label>投資経験</label>
+<label class="required">投資経験</label>
 <select name="experience" required>
 <option value="">選択してください</option>
 <option value="none">なし</option>
@@ -83,7 +137,7 @@ button:hover{
 <option value="3+">3年以上</option>
 </select>
 
-<label>期待利回り</label>
+<label class="required">期待利回り</label>
 <select name="expected_return" required>
 <option value="">選択してください</option>
 <option value="50%">50%未満</option>
@@ -91,7 +145,7 @@ button:hover{
 <option value="200%+">200%以上</option>
 </select>
 
-<label>年収</label>
+<label class="required">年収</label>
 <select name="income" required>
 <option value="">選択してください</option>
 <option value="below_100k">100万円未満</option>
@@ -100,37 +154,56 @@ button:hover{
 <option value="above_500k">500万円以上</option>
 </select>
 
-<label>申込資金（円）</label>
+<label class="required">申込資金（円）</label>
 <input type="number" name="fund" placeholder="申込予定資金額を入力してください" min="0" step="1000" required>
 
 <button type="submit">申し込み送信</button>
+
 </form>
-<div class="footer">※ご入力いただいた情報は、内部管理およびご連絡の目的のみで使用いたします。</div>
+
+<div class="footer">
+※ご入力いただいた情報は、内部管理およびご連絡の目的のみで使用いたします。
 </div>
 
-<script>
-// 这里填入你的 Google Apps Script Web App 链接
-const scriptURL = "YOUR_GOOGLE_SCRIPT_URL";
+</div>
 
-document.getElementById("registrationForm").addEventListener("submit", e=>{
-  e.preventDefault();
-  const formData = new FormData(document.getElementById("registrationForm"));
-  // 生成客户编号
-  formData.append("client_id","C" + Date.now());
-  
-  fetch(scriptURL,{
-    method:"POST",
-    body:formData
-  }).then(()=>{
-    alert("申し込みが完了しました。担当者よりご連絡いたします。");
-    document.getElementById("registrationForm").reset();
-  }).catch(err=>{
-    alert("送信に失敗しました。後ほど再度お試しください。");
-  });
+
+<script>
+
+// 这里替换成你的 Google Apps Script Web App URL
+const scriptURL="YOUR_GOOGLE_SCRIPT_URL";
+
+document.getElementById("registrationForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const formData=new FormData(this);
+
+//生成客户编号
+formData.append("client_id","C"+Date.now());
+
+fetch(scriptURL,{
+method:"POST",
+body:formData
+})
+.then(response=>{
+
+//提交成功跳转页面
+window.location.href="success.html";
+
+})
+.catch(error=>{
+
+alert("送信に失敗しました。もう一度お試しください。");
+
 });
+
+});
+
 </script>
 
 </body>
 </html>
+
 
 
