@@ -2,36 +2,74 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>申込完了</title>
+<title>申請完了</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 
 body{
-font-family:Arial;
+font-family:"Hiragino Kaku Gothic ProN", Arial, sans-serif;
 background:#f5f6fa;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
 margin:0;
 }
 
-.box{
+.header{
+background:#0b3a63;
+color:white;
+text-align:center;
+padding:20px;
+font-size:22px;
+font-weight:bold;
+line-height:1.6;
+}
+
+.container{
+max-width:600px;
+margin:40px auto;
 background:white;
 padding:40px;
 border-radius:10px;
+box-shadow:0 6px 25px rgba(0,0,0,0.1);
 text-align:center;
-box-shadow:0 5px 20px rgba(0,0,0,0.1);
 }
 
-h2{
-color:#0b3a63;
+.success-icon{
+font-size:60px;
+color:#28a745;
+margin-bottom:20px;
 }
 
-p{
-color:#666;
-margin-top:10px;
+.title{
+font-size:22px;
+font-weight:bold;
+margin-bottom:15px;
+}
+
+.text{
+font-size:15px;
+color:#555;
+line-height:1.7;
+}
+
+button{
+margin-top:30px;
+padding:12px 25px;
+background:#0b3a63;
+color:white;
+border:none;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#083252;
+}
+
+.footer{
+margin-top:30px;
+font-size:12px;
+color:#888;
 }
 
 </style>
@@ -40,12 +78,38 @@ margin-top:10px;
 
 <body>
 
-<div class="box">
+<div class="header">
+資産運用プランB<br>
+年金プラン申請書
+</div>
 
-<h2>申し込み完了</h2>
+<div class="container">
 
-<p>ご登録ありがとうございます。<br>
-担当者よりご連絡いたします。</p>
+<div class="success-icon">✔</div>
+
+<div class="title">
+申請が完了しました
+</div>
+
+<div class="text">
+
+この度は資産運用プランBへの申請ありがとうございます。<br><br>
+
+ご登録内容を確認後、担当者より<br>
+お電話またはメールにてご連絡させていただきます。<br><br>
+
+通常、1営業日以内にご連絡いたしますので<br>
+しばらくお待ちください。
+
+</div>
+
+<button onclick="location.href='index.html'">
+トップページへ戻る
+</button>
+
+<div class="footer">
+© 資産運用プランB
+</div>
 
 </div>
 
