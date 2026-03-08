@@ -137,6 +137,20 @@ text-align:center;
 <label class="required">申込資金（円）</label>
 <input type="number" name="fund" min="0" step="1000" required>
 <label class="required">守秘義務契約（NDA）を遵守することに同意しますか</label>
+
+<div class="radio-group">
+
+<label class="radio-item">
+<input type="radio" name="nda_agreement" value="はい">
+<span>はい、同意します</span>
+</label>
+
+<label class="radio-item">
+<input type="radio" name="nda_agreement" value="いいえ">
+<span>いいえ</span>
+</label>
+
+</div>
 <button type="submit">申し込み送信</button>
 
 </form>
@@ -234,6 +248,7 @@ alert("送信に失敗しました")
 
 </body>
 </html>
+
 
 
 
