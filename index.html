@@ -104,6 +104,14 @@ cursor:pointer;
 .radio-item input{
 width:auto;
 }
+
+.nda-note{
+font-size:12px;
+color:#777;
+margin-top:8px;
+line-height:1.6;
+}
+
 </style>
 </head>
 
@@ -154,6 +162,7 @@ width:auto;
 
 <label class="required">申込資金（円）</label>
 <input type="number" name="fund" min="0" step="1000" required>
+
 <label class="required">守秘義務契約（NDA）を遵守することに同意しますか</label>
 
 <div class="radio-group">
@@ -169,27 +178,30 @@ width:auto;
 </label>
 
 </div>
-<button type="submit">申し込み送信</button>
+
+<p class="nda-note">
+※本プログラムの内容および情報の第三者への開示は禁止されています。<br>
+※違反した場合、法的措置を取る場合があります。
+</p>
+
+<button type="submit" id="submitBtn">申し込み送信</button>
 
 </form>
 
 <div class="footer">
-※ご入力いただいた情報は、内部管理およびご連絡の目的のみで使用いたします。
+※ご入力いただいた個人情報は、本申請手続きおよびご連絡の目的のみに使用し、第三者へ提供することはありません。
 </div>
 
 </div>
-
 
 <script>
 
-// Google Script API
 const scriptURL="https://script.google.com/macros/s/AKfycbz8d0bNSaEIC2saHWx_sKZLhVgvF34FevV70sCKRk5vjsD5x2QwAz2yD1txUSsfvO_tiQ/exec"
 
 let clientIP=""
 let clientCountry=""
 let clientCity=""
 
-// 获取IP
 async function loadIP(){
 
 try{
@@ -236,6 +248,22 @@ document.getElementById("registrationForm").addEventListener("submit",function(e
 
 e.preventDefault()
 
+const nda=document.querySelector('input[name="nda_agreement"]:checked')
+
+if(!nda){
+alert("守秘義務契約への同意が必要です")
+return
+}
+
+if(nda.value==="いいえ"){
+alert("守秘義務契約に同意しない場合、申請できません。")
+return
+}
+
+const btn=document.getElementById("submitBtn")
+btn.disabled=true
+btn.innerText="送信中..."
+
 const formData=new FormData(this)
 
 formData.append("client_id","C"+Date.now())
@@ -249,7 +277,8 @@ fetch(scriptURL,{
 method:"POST",
 body:formData
 })
-.then(res=>{
+.then(res=>res.text())
+.then(data=>{
 
 window.location.href="success.html"
 
@@ -257,6 +286,8 @@ window.location.href="success.html"
 .catch(err=>{
 
 alert("送信に失敗しました")
+btn.disabled=false
+btn.innerText="申し込み送信"
 
 })
 
